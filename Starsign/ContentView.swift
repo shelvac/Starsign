@@ -2,23 +2,6 @@
 //  ContentView.swift
 //  Starsign
 //
-//  Created by Simge Helvaci on 2.07.2026.
+//  Bu şablon dosya artık kullanılmıyor — uygulama BirthDataFormView ile açılıyor.
+//  (This template file is no longer used; the app launches with BirthDataFormView.)
 //
-
-import SwiftUI
-
-struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
-
-#Preview {
-    ContentView()
-}
