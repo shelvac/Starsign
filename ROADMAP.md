@@ -1,50 +1,38 @@
-# Starsign — Development Roadmap
+# Starsign — Yol Haritası (v2, 2 Temmuz 2026)
 
-A step-by-step plan for building a Co-Star-style natal chart app in pure Swift/SwiftUI.
+Konsey kararı + pazar analiziyle güncellendi. Konumlandırma: **"İsim-yüzlü, hesap verebilir tek geliştirici; verin telefonunda kalır."** Türkçe, editöryel, güvenilir. Fal/tarot/mikro-ödeme alanına girilmez (MASAK gölgesi, toksik pazar).
 
-## Phase 0 — Setup (Day 1)
-- Install Xcode from the Mac App Store (free)
-- Create a free Apple Developer account (paid $99/yr account only needed to publish)
-- Follow `SETUP.md` to create the project and add the starter code in this folder
+## ✅ Faz 0–1: Natal Harita Çekirdeği (TAMAM)
+Efemeris motoru (Meeus/JPL doğrulamalı), Whole Sign evler, Yükselen, açılar, harita çarkı, doğum formu (CLGeocoder + saat dilimi). Simülatörde çalışıyor, GitHub'da.
 
-## Phase 1 — Natal Chart Core (Weeks 1–3) ✅ scaffolded
-The heart of the app: birth data in → chart out.
+## 🔥 Faz 2: Retention Motoru (ŞİMDİ — hedef ~4 hafta)
+Killer app bir özellik değil, **her sabah kilit ekranından açtıran alışkanlık.**
 
-1. **Birth data input**: date, exact time, and place of birth. Place must become latitude/longitude — use Apple's built-in `CLGeocoder` (no API key needed).
-2. **Ephemeris (planet positions)**: the starter code includes a self-contained engine (`Ephemeris.swift`) accurate to roughly a degree — fine for sign placements while learning. Before shipping, swap in the [SwissEphemeris Swift package](https://github.com/vsmithers1087/SwissEphemeris) for professional accuracy. ⚠️ Swiss Ephemeris is AGPL-3.0; a commercial app needs a paid license from Astrodienst (~CHF 750 one-time) or you keep your app's source open.
-3. **Houses & Ascendant**: starter code uses Whole Sign houses (simplest and increasingly popular). Placidus can come later via Swiss Ephemeris.
-4. **Chart wheel UI**: `ChartWheelView.swift` draws the zodiac wheel with SwiftUI `Canvas`.
-5. **Placements list**: "Sun in Leo, 3rd house" style rows — this is what most users actually read.
+1. **Marka geçişi (2-3 gün):** ses tonu, logo, renk paleti. Instagram + TestFlight'a yetecek kadar; büyük tasarım fazı değil.
+2. **50-100 Türkçe transit bildirim şablonu (1 hafta):** parametrik (gezegen-açı-ev), LLM'siz. Statik 1728 kombinasyonluk ansiklopedi YAZILMAYACAK (konsey kararı: tek kişi tuzağı).
+3. **Transit motoru + günlük yerel bildirim:** mevcut Ephemeris "bugün" için çalıştırılır, natal haritayla en sıkı açılar bulunur, şablona bağlanır.
+4. **Instagram kanalı:** "coming soon" DEĞİL — ilk günden değer veren günlük gökyüzü içeriği (şablon metinleri çift kullanım: app + reels). Bio'da TestFlight linki.
+5. **TestFlight beta (20-30 kişi) + retention ölçümü:** hedef metrik = haftada 2+ açılış. Sinyal gelmeden başka yatırım yok.
 
-## Phase 2 — Interpretations (Weeks 4–5)
-Co-Star's real product is *writing*, not math.
-- Build a content database: one text blurb per (planet × sign) and (planet × house) — 12×10 + 12×10 ≈ 240 entries. Store as JSON in the app bundle.
-- Aspects (conjunction, opposition, trine, square, sextile): the math is in the starter engine; write blurbs for major planet pairs.
-- Tone is your brand. Co-Star = blunt/poetic. Decide yours early.
+## Faz 2.5: Farklılaştırıcılar (pazar boşluğu doğrulandı)
+- **Saatsiz harita:** Co-Star/The Pattern saat zorunlu tutuyor → kapıda çevrilen kullanıcıyı biz alırız. Saat yoksa ev/Yükselen gizlenir, gezegen-burç yerleşimleri gösterilir. İleride "hayat olayları testi" ile saat tahmini (rektifikasyon) premium olur.
+- **Düğün tarihi raporu (electional):** Türkçe tüketici uygulamasında YOK; web hesaplayıcıları teknik ve İngilizce. Motor bugünkü haliyle hesaplayabilir (Venüs retrosu, boşlukta Ay, benefik konumlar). Gelir: yüksek değerli TEK SEFERLİK satın alma.
+- ⚠️ Çocuk/doğum tarihi zamanlaması: talep var ama tıbbi karar alanına komşu — yalnızca "sembolik rehberlik" çerçevesiyle, sağlık tavsiyesi imasız; App Store review riski nedeniyle sona bırakıldı.
 
-## Phase 3 — Daily Horoscopes / Transits (Weeks 6–8)
-- Compute today's planet positions and compare against the user's natal chart (transits) — same engine, run for "now".
-- Rank the tightest transit aspects, map them to your content database → personalized daily reading.
-- Local push notification each morning (`UNUserNotificationCenter`), later server push.
+## Faz 3: Sinastri + Gelir
+- Türkçe derin sinastri yorumu (İngilizce uygulamaların zayıf bıraktığı alan).
+- **Freemium:** günlük bildirim + temel harita ücretsiz (retention motoru); detaylı transit raporları + sinastri abonelikte; düğün raporu tek seferlik.
+- StoreKit 2, Sign in with Apple.
 
-## Phase 4 — Compatibility / Synastry (Weeks 9–10)
-- Second birth-data entry → compute cross-aspects between two charts.
-- Score by aspect type/tightness; show a comparison view.
+## Faz 4: PARK EDİLDİ (retention kanıtlanana kadar dokunma)
+- Sosyal özellikler (network effect tek kişiyle kurulamaz; Gen-Z zaten Co-Star'da bağlı).
+- Diaspora genişlemesi (konsey 5/5 reddetti: 2.-3. nesil Türkçe okumuyor, kapasite yok).
+- RAG/LLM yorum katmanı (önce statik şablonlar RAG'in kaynak metni olur).
 
-## Phase 5 — Social + Backend (Weeks 11+)
-Everything before this runs 100% on-device. Social needs a backend:
-- **Sign in with Apple** (required by App Store if you offer any login)
-- CloudKit (free, pure-Apple, easiest) or Firebase/Supabase for friend graphs
-- Friend requests, chart comparison, "your friend's day" notifications
+## Bilinen Riskler (konseyin yakaladığı kör noktalar)
+- **Dağıtım:** sıfır bütçeyle keşfedilebilirlik → Instagram organik kanal + ASO Türkçe anahtar kelime çalışması.
+- **Platform:** App Store komisyonu %15-30, KVKK, astroloji kategorisi review hassasiyeti (Guideline 4.3 — kişiselleştirilmiş harita bunu karşılıyor).
+- **Lisans:** Ticari yayın öncesi Swiss Ephemeris'e geçilecekse AGPL / ücretli Astrodienst lisansı (~CHF 750) gerekir; mevcut motor kendi kodumuz, lisans sorunu yok.
 
-## Phase 6 — Polish & Ship
-- App icon, onboarding flow, dark-sky aesthetic
-- Paywall if desired (StoreKit 2) — e.g. advanced charts behind subscription
-- TestFlight beta → App Store review. Note: Apple requires astrology apps to offer more than generic content (Guideline 4.3 spam rules) — personalized charts satisfy this.
-
-## Skills you'll pick up, in order
-Swift basics → SwiftUI layout → dates/timezones (the hardest real bug source in astrology apps!) → Canvas drawing → CoreLocation/geocoding → notifications → StoreKit/CloudKit.
-
-## Sources
-- [SwissEphemeris Swift Package](https://github.com/vsmithers1087/SwissEphemeris)
-- [Swiss Ephemeris official site & licensing](https://www.astro.com/swisseph/swephinfo_e.htm)
+## Rakip Özeti (Tem 2026)
+Faladdin/Binnaz (25M+ indirme, fal, MASAK soruşturması) · Astopia, Ms Astro, Astromatik (ünlü astrolog+AI), Moyra, Stellium (yerli natal, küçük) · Co-Star 30M+, The Pattern (İngilizce, saat zorunlu, TR yerelleşmesi yok). Boşluk: **Türkçe, teknik olmayan dille günlük kişisel gökyüzü + saatsiz harita + electional.**
